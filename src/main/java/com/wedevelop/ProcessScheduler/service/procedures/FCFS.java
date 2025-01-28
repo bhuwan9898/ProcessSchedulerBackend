@@ -12,7 +12,6 @@ public class FCFS implements SchedulingStrategy {
     public List<Procedure> schedule(List<Procedure> procedures) {
         // FCFS implementation
         System.out.println("FCFS");
-        System.out.println(procedures.stream().toList());
         return procedures.stream().toList();
     }
 }
