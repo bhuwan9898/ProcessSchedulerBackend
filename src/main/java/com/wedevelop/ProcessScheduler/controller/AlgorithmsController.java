@@ -12,14 +12,9 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-
 public class AlgorithmsController {
-    private final ProcessSchedulerService schedulerService;
     @Autowired
-    public AlgorithmsController(ProcessSchedulerService schedulerService) {
-        this.schedulerService = schedulerService;
-    }
-
+    ProcessSchedulerService schedulerService;
     @GetMapping("/")
     public String greet(){
        return "Hello welcome to the scheduling algorithms program";

@@ -12,14 +12,7 @@ import java.util.List;
 public class ProcessSchedulerService {
 
     @Autowired
-    private final SchedulingStrategyFactory strategyFactory;
-
-
-
-    public ProcessSchedulerService(SchedulingStrategyFactory strategyFactory) {
-        this.strategyFactory = strategyFactory;
-    }
-
+    SchedulingStrategyFactory strategyFactory;
     public List<Procedure> scheduleProcesses(List<Procedure> procedures, AlgorithmType type) {
         SchedulingStrategy strategy = strategyFactory.getStrategy(type);
         return strategy.schedule(procedures);

@@ -12,6 +12,8 @@ public class Procedure {
     public String procedureName;
     public int arrivalTime;
     public int burstTime;
+    public int startTime;
+    public int endTime;
 }
 
 
