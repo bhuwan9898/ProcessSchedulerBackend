@@ -1,5 +1,6 @@
 package com.wedevelop.ProcessScheduler.service.procedures;
 
+
 import com.wedevelop.ProcessScheduler.model.Procedure;
 import com.wedevelop.ProcessScheduler.service.SchedulingStrategy;
 import org.springframework.stereotype.Component;
@@ -7,13 +8,13 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
+// Longest job first
 @Component
-public class SJF implements SchedulingStrategy {
+public class LJF implements SchedulingStrategy {
     @Override
-    public List<Procedure> schedule(List<Procedure> procedures) {
-        // SJF implementation
+    public List<Procedure> schedule(List<Procedure> procedures){
+        //LJF implementation
 
         // list to store the result
         List<Procedure> result = new ArrayList<>();
@@ -31,10 +32,9 @@ public class SJF implements SchedulingStrategy {
             // creating local variable to use inside lambda expression
             int finalCurrentTime = currentTime;
             // get processes that have arrived by current time
-
             List<Procedure> availableProcedures = remainingProcedures.stream()
                     .filter(p -> p.arrivalTime <= finalCurrentTime)
-                    .sorted(Comparator.comparingInt(p -> p.burstTime)) // SJF: Pick shortest job
+                    .sorted((p1, p2) -> Integer.compare(p2.burstTime, p1.burstTime)) // LJF: Pick longest job from remaining list
                     .toList();
 
             if (availableProcedures.isEmpty()) {
@@ -43,7 +43,7 @@ public class SJF implements SchedulingStrategy {
                 continue;
             }
 
-            // pick the shortest job since it is already sorted based on least burst time first
+            // pick the longest job since it is already sorted based on descending order of burst time
             Procedure runningProcedure = availableProcedures.get(0);
             runningProcedure.startTime = currentTime;
             runningProcedure.endTime = runningProcedure.startTime + runningProcedure.burstTime;
@@ -56,5 +56,7 @@ public class SJF implements SchedulingStrategy {
             remainingProcedures.remove(runningProcedure);
         }
         return result;
+
     }
+
 }

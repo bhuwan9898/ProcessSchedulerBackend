@@ -3,6 +3,7 @@ package com.wedevelop.ProcessScheduler.factory;
 import com.wedevelop.ProcessScheduler.model.AlgorithmType;
 import com.wedevelop.ProcessScheduler.service.SchedulingStrategy;
 import com.wedevelop.ProcessScheduler.service.procedures.FCFS;
+import com.wedevelop.ProcessScheduler.service.procedures.LJF;
 import com.wedevelop.ProcessScheduler.service.procedures.SJF;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,7 @@ public class SchedulingStrategyFactory {
         strategies = new HashMap<>();
         strategies.put(AlgorithmType.FCFS, findStrategy(strategyList, FCFS.class));
         strategies.put(AlgorithmType.SJF, findStrategy(strategyList, SJF.class));
+        strategies.put(AlgorithmType.LJF, findStrategy(strategyList, LJF.class));
     }
 
     private SchedulingStrategy findStrategy(List<SchedulingStrategy> strategies, Class<?> strategyClass) {

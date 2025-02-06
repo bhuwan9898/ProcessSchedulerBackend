@@ -16,12 +16,12 @@ public class FCFS implements SchedulingStrategy {
         // we need to create a method in all the scheduling strategies that will create start,end, turn around and waiting time.
         // this avoids the DRY principle.
          procedures.sort(Comparator.comparingInt(p -> p.arrivalTime));
-         Procedure firstProcedure = procedures.get(0);
-         firstProcedure.startTime = firstProcedure.arrivalTime;
-         firstProcedure.endTime = firstProcedure.startTime + firstProcedure.burstTime;
+         procedures.get(0).startTime = procedures.get(0).arrivalTime;
+         procedures.get(0).endTime = procedures.get(0).startTime + procedures.get(0).burstTime;
          for (int i = 1;i<procedures.size();i++){
              Procedure currentProcedure = procedures.get(i);
-             currentProcedure.startTime = procedures.get(i-1).endTime;
+             // Ensures the CPU does not remain idle if the next process arrives later
+             currentProcedure.startTime = Math.max(procedures.get(i - 1).endTime, currentProcedure.arrivalTime);
              currentProcedure.endTime = currentProcedure.startTime + currentProcedure.burstTime;
          }
         System.out.println("FCFS");
