@@ -22,9 +22,12 @@ public class AlgorithmsController {
     @PostMapping("/schedule")
     public ResponseEntity<List<Procedure>> scheduleProcesses(
             @RequestBody List<Procedure> procedures,
-            @RequestParam AlgorithmType type) {
-        return ResponseEntity.ok(schedulerService.scheduleProcesses(procedures, type));
+            @RequestParam AlgorithmType type,
+            @RequestParam int timeQuantum
+            ) {
+        return ResponseEntity.ok(schedulerService.scheduleProcesses(procedures, type, timeQuantum));
     }
+
 
 }
 

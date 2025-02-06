@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 public class LJF implements SchedulingStrategy {
     @Override
-    public List<Procedure> schedule(List<Procedure> procedures){
+    public List<Procedure> schedule(List<Procedure> procedures, int timeQuantum){
         //LJF implementation
 
         // list to store the result

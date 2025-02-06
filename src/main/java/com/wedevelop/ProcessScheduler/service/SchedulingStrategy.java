@@ -5,5 +5,7 @@ import com.wedevelop.ProcessScheduler.model.Procedure;
 import java.util.List;
 
 public interface SchedulingStrategy {
-    List<Procedure> schedule(List<Procedure> procedures);
+    List<Procedure> schedule(List<Procedure> procedures, int timeQuantum);
+
+
 }

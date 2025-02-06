@@ -13,8 +13,8 @@ public class ProcessSchedulerService {
 
     @Autowired
     SchedulingStrategyFactory strategyFactory;
-    public List<Procedure> scheduleProcesses(List<Procedure> procedures, AlgorithmType type) {
+    public List<Procedure> scheduleProcesses(List<Procedure> procedures, AlgorithmType type, int timeQuantum) {
         SchedulingStrategy strategy = strategyFactory.getStrategy(type);
-        return strategy.schedule(procedures);
+        return strategy.schedule(procedures, timeQuantum);
     }
 }

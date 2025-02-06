@@ -10,7 +10,7 @@ import java.util.List;
 @Component
 public class FCFS implements SchedulingStrategy {
     @Override
-    public List<Procedure> schedule(List<Procedure> procedures) {
+    public List<Procedure> schedule(List<Procedure> procedures, int timeQuantum) {
         // sort the list first based on first arrival first
 
         // we need to create a method in all the scheduling strategies that will create start,end, turn around and waiting time.

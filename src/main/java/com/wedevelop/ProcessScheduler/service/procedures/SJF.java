@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Component
 public class SJF implements SchedulingStrategy {
     @Override
-    public List<Procedure> schedule(List<Procedure> procedures) {
+    public List<Procedure> schedule(List<Procedure> procedures, int timeQuantum) {
         // SJF implementation
 
         // list to store the result
