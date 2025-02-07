@@ -25,6 +25,7 @@ public class AlgorithmsController {
             @RequestParam AlgorithmType type,
             @RequestParam int timeQuantum
             ) {
+        System.out.println(timeQuantum);
         return ResponseEntity.ok(schedulerService.scheduleProcesses(procedures, type, timeQuantum));
     }
 

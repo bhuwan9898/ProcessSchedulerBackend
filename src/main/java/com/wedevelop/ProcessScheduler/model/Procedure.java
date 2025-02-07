@@ -14,6 +14,13 @@ public class Procedure {
     public int burstTime;
     public int startTime;
     public int endTime;
+
+    public Procedure(String procedureName, int initialArrivalTime, int newBurstTime) {
+        this.arrivalTime = initialArrivalTime;
+        this.procedureName = procedureName;
+        this.burstTime = newBurstTime;
+
+    }
 }
 
 
