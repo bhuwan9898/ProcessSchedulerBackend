@@ -19,7 +19,9 @@ public class RoundRobin implements SchedulingStrategy {
 
         while (!remainingProcedures.isEmpty()) {
             Procedure runningProcedure = remainingProcedures.poll();
-
+            if (currentTime < runningProcedure.arrivalTime) {
+                currentTime = runningProcedure.arrivalTime; // Move time forward to avoid incorrect scheduling
+            }
             // Set start time for the current execution
             runningProcedure.startTime = currentTime;
 
