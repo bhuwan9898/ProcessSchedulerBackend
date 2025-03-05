@@ -15,10 +15,15 @@ public class Procedure {
     public int startTime;
     public int endTime;
 
+    public int waitingTime;
+
+    public int turnAroundTime;
+
     public Procedure(String procedureName, int initialArrivalTime, int newBurstTime) {
         this.arrivalTime = initialArrivalTime;
         this.procedureName = procedureName;
         this.burstTime = newBurstTime;
+
 
     }
 }

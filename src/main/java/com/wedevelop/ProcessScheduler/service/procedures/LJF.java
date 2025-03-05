@@ -47,6 +47,8 @@ public class LJF implements SchedulingStrategy {
             Procedure runningProcedure = availableProcedures.get(0);
             runningProcedure.startTime = currentTime;
             runningProcedure.endTime = runningProcedure.startTime + runningProcedure.burstTime;
+            runningProcedure.waitingTime = runningProcedure.startTime - runningProcedure.arrivalTime;
+            runningProcedure.turnAroundTime = runningProcedure.waitingTime + runningProcedure.burstTime;
             result.add(runningProcedure);
 
             // Update current time to the end time of the running process
@@ -56,7 +58,6 @@ public class LJF implements SchedulingStrategy {
             remainingProcedures.remove(runningProcedure);
         }
         return result;
-
     }
 
 }
