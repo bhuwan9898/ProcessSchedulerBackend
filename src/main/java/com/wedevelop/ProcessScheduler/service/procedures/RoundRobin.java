@@ -10,37 +10,45 @@ import java.util.*;
 public class RoundRobin implements SchedulingStrategy {
     @Override
     public List<Procedure> schedule(List<Procedure> procedures, int timeQuantum) {
-        System.out.println("RoundRobin");
+        if (procedures == null || procedures.isEmpty() || timeQuantum <= 0) {
+            throw new IllegalArgumentException("Invalid input: procedures list is empty or time quantum is non-positive.");
+        }
+
+        System.out.println("RoundRobin Scheduling");
         List<Procedure> result = new ArrayList<>();
         procedures.sort(Comparator.comparingInt(p -> p.arrivalTime));
 
-        Queue<Procedure> remainingProcedures = new LinkedList<>(procedures);
+        Queue<Procedure> readyQueue = new LinkedList<>(procedures);
         int currentTime = procedures.get(0).arrivalTime;
 
-        while (!remainingProcedures.isEmpty()) {
-            Procedure runningProcedure = remainingProcedures.poll();
-            if (currentTime < runningProcedure.arrivalTime) {
-                currentTime = runningProcedure.arrivalTime; // Move time forward to avoid incorrect scheduling
-            }
+        while (!readyQueue.isEmpty()) {
+            Procedure currentProcedure = readyQueue.poll();
+
+            // Ensure currentTime is not behind the procedure's arrival time
+            currentTime = Math.max(currentTime, currentProcedure.arrivalTime);
+
             // Set start time for the current execution
-            runningProcedure.startTime = currentTime;
+            currentProcedure.startTime = currentTime;
 
-            if (runningProcedure.burstTime <= timeQuantum) {
-                // Process completes execution
-                currentTime += runningProcedure.burstTime;
-                runningProcedure.endTime = currentTime;
-                result.add(runningProcedure);
-            } else {
-                // Process needs more time, run for timeQuantum and create a copy
-                currentTime += timeQuantum;
-                runningProcedure.endTime = currentTime;
+            // Determine the execution time (minimum of burst time and time quantum)
+            int executionTime = Math.min(currentProcedure.burstTime, timeQuantum);
 
-                // Add execution record to result
-                result.add(runningProcedure);
+            // Update current time
+            currentTime += executionTime;
 
-                // Create a copy of the process with reduced burst time
-                Procedure newCopy = new Procedure(runningProcedure.procedureName,runningProcedure.arrivalTime, runningProcedure.burstTime - timeQuantum);
-                remainingProcedures.add(newCopy);
+            // Update burst time for the procedure
+            currentProcedure.burstTime -= executionTime;
+
+            // Calculate waiting time and turnaround time
+            currentProcedure.waitingTime = currentTime - currentProcedure.arrivalTime - executionTime;
+            currentProcedure.turnAroundTime = currentProcedure.waitingTime + executionTime;
+
+            // Add the procedure to the result list
+            result.add(currentProcedure);
+
+            // If the procedure has remaining burst time, re-add it to the queue
+            if (currentProcedure.burstTime > 0) {
+                readyQueue.add(currentProcedure);
             }
         }
 
